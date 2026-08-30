@@ -7,6 +7,7 @@ Playwright end-to-end testing suite with Docker containerization and GitHub Acti
 - **Docker Support**: Containerized execution using official Microsoft Playwright Docker image (`mcr.microsoft.com/playwright:v1.62.1-noble`).
 - **Docker Compose**: Pre-configured `docker-compose.yml` with volume mounts for test reports.
 - **GitHub Actions Integration**: Automated CI pipeline running tests inside Playwright Docker container on push/PR.
+- **GitHub Pages Report Publishing**: Automatically publishes interactive HTML test reports to GitHub Pages on every `main` push.
 
 ## Quick Start
 
@@ -38,7 +39,15 @@ docker compose down
 ```
 
 ## Viewing Test Reports
-After running tests, view the HTML report locally:
+
+### Local Report
 ```bash
 npx playwright show-report
 ```
+
+### GitHub Pages Live Report
+Test reports are automatically deployed to GitHub Pages on pushes to `main`.
+- Live URL: `https://subramanyamr-in.github.io/docker-pw/`
+
+> **One-Time Repository Setup**:
+> Go to your GitHub repository -> **Settings** -> **Pages** -> under **Build and deployment / Source**, select **GitHub Actions**.

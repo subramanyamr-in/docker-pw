@@ -5,6 +5,17 @@ on:
   pull_request:
     branches: [ main, master ]
 
+# Permissions required for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent simultaneous deployments
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   test:
     timeout-minutes: 60
@@ -14,7 +25,7 @@ jobs:
       options: --ipc=host
     env:
       HOME: /root
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
     - uses: actions/checkout@v4
 
@@ -26,10 +37,28 @@ jobs:
         HOME: /root
       run: HOME=/root npx playwright test
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload Playwright Report Artifact
+      uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
 
+    - name: Upload GitHub Pages Artifact
+      uses: actions/upload-pages-artifact@v3
+      if: ${{ !cancelled() }}
+      with:
+        path: playwright-report/
+
+  deploy-pages:
+    needs: test
+    if: ${{ !cancelled() && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
