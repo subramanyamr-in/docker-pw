@@ -11,4 +11,5 @@ services:
       # Mount reports and test results back to the host machine
       - ./playwright-report:/app/playwright-report
       - ./test-results:/app/test-results
+      - ./results.xml:/app/results.xml
     command: npx playwright test
