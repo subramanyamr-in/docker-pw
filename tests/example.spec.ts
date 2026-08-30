@@ -1,3 +1,4 @@
+// Playwright E2E Test Suite - Xray Integration Linked to OHRMM Project
 import { test, expect } from '@playwright/test';
 
 test('has title @OHRMM-140', async ({ page }) => {
