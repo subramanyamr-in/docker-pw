@@ -1,0 +1,20 @@
+{
+  "name": "docker-pw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "docker:build": "docker build -t playwright-tests .",
+    "docker:run": "docker run --rm -v $(pwd)/playwright-report:/app/playwright-report playwright-tests",
+    "docker:compose": "docker compose up --build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.4.0"
+  }
+}

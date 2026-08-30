@@ -1,0 +1,14 @@
+services:
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: playwright_runner
+    ipc: host # Prevents Chromium memory crashing issues inside container
+    environment:
+      - CI=true
+    volumes:
+      # Mount reports and test results back to the host machine
+      - ./playwright-report:/app/playwright-report
+      - ./test-results:/app/test-results
+    command: npx playwright test
