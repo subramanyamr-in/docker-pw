@@ -9,12 +9,11 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    # Run all job steps directly inside the Playwright Docker container
     container:
       image: mcr.microsoft.com/playwright:v1.62.1-noble
       options: --ipc=host
-      env:
-        HOME: /root
+    env:
+      HOME: /root
     steps:
     - uses: actions/checkout@v4
 
@@ -22,7 +21,9 @@ jobs:
       run: npm ci
 
     - name: Run Playwright tests
-      run: npx playwright test
+      env:
+        HOME: /root
+      run: HOME=/root npx playwright test
 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
