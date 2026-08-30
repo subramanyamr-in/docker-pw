@@ -61,7 +61,7 @@ jobs:
       run: |
         echo "Importing results.xml to Jira Xray..."
         TOKEN=$(curl -s -H "Content-Type: application/json" -X POST --data "{\"client_id\": \"$XRAY_CLIENT_ID\", \"client_secret\": \"$XRAY_CLIENT_SECRET\"}" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
-        curl -X POST -H "Content-Type: application/xml" -H "Authorization: Bearer $TOKEN" --data-binary @results.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=DPW"
+        curl -X POST -H "Content-Type: application/xml" -H "Authorization: Bearer $TOKEN" --data-binary @results.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=OHRMM"
 
     - name: Upload GitHub Pages Artifact
       uses: actions/upload-pages-artifact@v3
