@@ -54,14 +54,18 @@ jobs:
         retention-days: 30
 
     - name: Import JUnit Results to Jira / Xray
-      if: ${{ !cancelled() && secrets.XRAY_CLIENT_ID != '' }}
+      if: ${{ !cancelled() }}
       env:
         XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
         XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
       run: |
-        echo "Importing results.xml to Jira Xray..."
-        TOKEN=$(curl -s -H "Content-Type: application/json" -X POST --data "{\"client_id\": \"$XRAY_CLIENT_ID\", \"client_secret\": \"$XRAY_CLIENT_SECRET\"}" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
-        curl -X POST -H "Content-Type: application/xml" -H "Authorization: Bearer $TOKEN" --data-binary @results.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=OHRMM"
+        if [ -n "$XRAY_CLIENT_ID" ]; then
+          echo "Importing results.xml to Jira Xray..."
+          TOKEN=$(curl -s -H "Content-Type: application/json" -X POST --data "{\"client_id\": \"$XRAY_CLIENT_ID\", \"client_secret\": \"$XRAY_CLIENT_SECRET\"}" https://xray.cloud.getxray.app/api/v2/authenticate | tr -d '"')
+          curl -X POST -H "Content-Type: application/xml" -H "Authorization: Bearer $TOKEN" --data-binary @results.xml "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=OHRMM"
+        else
+          echo "XRAY_CLIENT_ID secret not configured, skipping Xray import."
+        fi
 
     - name: Upload GitHub Pages Artifact
       uses: actions/upload-pages-artifact@v3
