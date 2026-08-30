@@ -1,5 +1,8 @@
 # docker-pw
 
+[![Playwright Tests](https://github.com/subramanyamr-in/docker-pw/actions/workflows/playwright.yml/badge.svg)](https://github.com/subramanyamr-in/docker-pw/actions/workflows/playwright.yml)
+[![GitHub Pages Report](https://img.shields.io/badge/Playwright--Report-GitHub%20Pages-blue)](https://subramanyamr-in.github.io/docker-pw/)
+
 Playwright end-to-end testing suite with Docker containerization and GitHub Actions CI workflow.
 
 ## Features
