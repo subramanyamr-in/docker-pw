@@ -20,5 +20,5 @@ test('get started link @OHRMM-141', async ({ page }) => {
 
 test('verigy MCP link @OHRMM-147', async ({ page }) => {
   await page.goto('https://playwright.dev/mcp/introduction');
-  await expect(page.getByRole('heading', { name: 'Playwright MCP' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Playwright MCP' }).first()).toBeVisible();
 });
