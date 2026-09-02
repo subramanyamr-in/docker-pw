@@ -17,3 +17,8 @@ test('get started link @OHRMM-141', async ({ page }) => {
   // Expects page to have a heading with the name of Installation.
   await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
+
+test('verigy MCP link @OHRMM-147', async ({ page }) => {
+  await page.goto('https://playwright.dev/mcp/introduction');
+  await expect(page.getByRole('heading', { name: 'Playwright MCP' })).toBeVisible();
+});
